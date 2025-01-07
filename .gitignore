@@ -1,0 +1,5 @@
+env/
+venv/
+.env
+input_data/
+x*
