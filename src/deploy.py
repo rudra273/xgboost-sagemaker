@@ -55,7 +55,7 @@ def main():
     sample_input = np.array([ 2.53130000e+00,  3.00000000e+01,  5.03938356e+00,  1.19349315e+00,
         1.56500000e+03,  2.67979452e+00,  3.51400000e+01, -1.19460000e+02]).reshape(1, -1)
 
-    sample_output = 0.59980532
+    sample_output = 0.9542558789253235
     sklearn_schema_builder = SchemaBuilder(
         sample_input=sample_input,
         sample_output=sample_output,
