@@ -74,7 +74,7 @@ def main():
     predictor = built_model.deploy(initial_instance_count=1, instance_type="ml.m5.large")
     
     # Optional: Test the predictor
-    prediction = predictor.predict(sklearn_input)
+    prediction = predictor.predict(sample_input)
     print("Model prediction:", prediction)
 
 if __name__ == '__main__':

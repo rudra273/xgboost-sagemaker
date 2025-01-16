@@ -29,7 +29,7 @@ def create_deployment_pipeline(
     # Create a pipeline session
     pipeline_session = PipelineSession()
 
-    image_uri = "750573229682.dkr.ecr.us-east-1.amazonaws.com/xgboost-sagemaker:latest"
+    image_uri = "750573229682.dkr.ecr.us-east-1.amazonaws.com/xgboost-sagemaker:latest
 
     # ScriptProcessor for deployment
     deployment_processor = ScriptProcessor(
