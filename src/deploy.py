@@ -48,9 +48,9 @@ def main():
     role = 'arn:aws:iam::750573229682:role/service-role/AmazonSageMaker-ExecutionRole-20241211T150457'
     
     # Get the latest model source from MLflow
-    source_path = get_latest_model_source("xgb-housing-model")
+    # source_path = get_latest_model_source("xgb-housing-model")
 
-    # source_path = 's3://sagemaker-studio-750573229682-fffkyjouino/models/0/3b8916ae80094f108a64c8491ee2313d/artifacts/model'
+    source_path = 's3://sagemaker-studio-750573229682-fffkyjouino/models/166/6013f8dc7d0b4c0a9249f8657d4bbac3/artifacts/model'
 
     sklearn_input = np.array([1.0, 2.0, 3.0, 4.0]).reshape(1, -1)
 
