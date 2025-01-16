@@ -88,14 +88,22 @@ from utils.helper import get_processed_data, test_function
 
 def train():
 
+    model_dir = '/opt/ml/processing/output'
+
     data = get_processed_data()
 
     print(data.head)
 
     tracking_uri = 'arn:aws:sagemaker:us-east-1:750573229682:mlflow-tracking-server/mlflow-tracking-server-sagemaker-poc'
 
-    X = data.drop(columns=["target"], axis=1)
-    y = data["target"]
+    mlflow.set_tracking_uri(tracking_uri)
+
+    # Set experiment name
+    experiment_name = 'xgboost-housing-regression'
+    mlflow.set_experiment(experiment_name)
+
+    X = data.drop(columns=["Target"], axis=1)
+    y = data["Target"]
 
     # Split the data into training and test sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -114,6 +122,8 @@ def train():
     model.fit(
         X_train, y_train,
     )
+
+    joblib.dump(model, os.path.join(model_dir, "model.joblib"))
 
     # Log the model to MLflow
     with mlflow.start_run() as run:

@@ -89,7 +89,7 @@ def create_sagemaker_pipeline(
     # Create pipeline
     pipeline = Pipeline(
         name='xgboost-mlflow-pipeline',
-        steps=[processing_step],
+        steps=[processing_step,training_step],
         sagemaker_session=pipeline_session
     )
 
