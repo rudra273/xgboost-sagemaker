@@ -48,16 +48,16 @@ def main():
     role = 'arn:aws:iam::750573229682:role/service-role/AmazonSageMaker-ExecutionRole-20241211T150457'
     
     # Get the latest model source from MLflow
-    source_path = get_latest_model_source("sklearn-experiment-model")
+    source_path = get_latest_model_source("xgb-housing-model")
 
     # source_path = 's3://sagemaker-studio-750573229682-fffkyjouino/models/0/3b8916ae80094f108a64c8491ee2313d/artifacts/model'
 
-    sklearn_input = np.array([1.0, 2.0, 3.0, 4.0]).reshape(1, -1)
+    xgb_housing_input = np.array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0,7.0,8.0]).reshape(1, -1)
 
-    sklearn_output = 1
+    xgb_housing_output = 0.123
     sklearn_schema_builder = SchemaBuilder(
-        sample_input=sklearn_input,
-        sample_output=sklearn_output,
+        sample_input=xgb_housing_input,
+        sample_output=xgb_housing_output,
     )
 
     # Create model builder with the schema builder.
@@ -73,7 +73,7 @@ def main():
     predictor = built_model.deploy(initial_instance_count=1, instance_type="ml.m5.large")
     
     # Optional: Test the predictor
-    prediction = predictor.predict(sklearn_input)
+    prediction = predictor.predict(xgb_housing_input)
     print("Model prediction:", prediction)
 
 if __name__ == '__main__':

@@ -108,7 +108,7 @@ def main():
     output_data_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/xgb_housing/processed_csv/" 
     model_output_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/xgb_housing/model/" 
 
-    # deploy_output_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/iris-deploy-output/"
+ 
 
     # Create pipeline
     pipeline = create_sagemaker_pipeline(
