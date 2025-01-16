@@ -52,12 +52,13 @@ def main():
 
     source_path = 's3://sagemaker-studio-750573229682-fffkyjouino/models/166/6013f8dc7d0b4c0a9249f8657d4bbac3/artifacts/model'
 
-    sklearn_input = np.array([1.0, 2.0, 3.0, 4.0]).reshape(1, -1)
+    sample_input = np.array([ 2.53130000e+00,  3.00000000e+01,  5.03938356e+00,  1.19349315e+00,
+        1.56500000e+03,  2.67979452e+00,  3.51400000e+01, -1.19460000e+02]).reshape(1, -1)
 
-    sklearn_output = 1
+    sample_output = 0.59980532
     sklearn_schema_builder = SchemaBuilder(
-        sample_input=sklearn_input,
-        sample_output=sklearn_output,
+        sample_input=sample_input,
+        sample_output=sample_output,
     )
 
     # Create model builder with the schema builder.
