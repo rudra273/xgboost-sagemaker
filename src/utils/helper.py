@@ -37,3 +37,21 @@ def upload_data(data, file_name):
     data.to_csv(output_file_path, index=False, header=0)
 
     return output_file_path
+
+
+def get_processed_data():
+    
+    processed_file_path = "/opt/ml/processing/input/train"
+    input_files = [
+        os.path.join(processed_file_path, file) 
+        for file in os.listdir(processed_file_path) 
+        if os.path.isfile(os.path.join(processed_file_path, file))
+    ]
+
+    if not input_files:
+        raise ValueError('No input files found in the training directory')
+
+    raw_data = [pd.read_csv(file, header=0, engine="python") for file in input_files]
+    processed_data = pd.concat(raw_data) 
+
+    return processed_data
