@@ -22,6 +22,8 @@ def get_data(file_name):
 
     df = pd.read_csv(input_file_path)    
 
+    print('get data function executed', df.columns)
+
     return df
  
 
@@ -34,7 +36,9 @@ def upload_data(data, file_name):
     output_file_path = os.path.join(output_path, file_name) 
 
     print(f"Saving processed data to: {output_file_path}")
-    data.to_csv(output_file_path, index=False, header=0)
+
+    print('data in upload data funtion', data.columns) 
+    data.to_csv(output_file_path, index=False)
 
     return output_file_path
 
@@ -51,7 +55,7 @@ def get_processed_data():
     if not input_files:
         raise ValueError('No input files found in the training directory')
 
-    raw_data = [pd.read_csv(file, header=0, engine="python") for file in input_files]
+    raw_data = [pd.read_csv(file, engine="python") for file in input_files]
     processed_data = pd.concat(raw_data) 
 
-    return processed_data
+    return processed_data 
