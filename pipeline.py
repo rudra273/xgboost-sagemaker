@@ -89,7 +89,7 @@ def create_sagemaker_pipeline(
     # Create pipeline
     pipeline = Pipeline(
         name='xgboost-mlflow-pipeline',
-        steps=[processing_step, training_step],
+        steps=[processing_step],
         sagemaker_session=pipeline_session
     )
 
@@ -104,9 +104,9 @@ def main():
 
     # S3 URIs for input and output data
     
-    input_data_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/xgboost/diabetes_input/"
-    output_data_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/xgboost/processed_data/" 
-    model_output_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/xgboost/model-output/" 
+    input_data_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/xgb_housing/inout_csv/"
+    output_data_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/xgb_housing/processed_csv/" 
+    model_output_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/xgb_housing/model/" 
 
     # deploy_output_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/iris-deploy-output/"
 

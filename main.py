@@ -1,35 +1,34 @@
-# Import libraries
-from sklearn.datasets import load_diabetes
+import os
+import numpy as np
+import pandas as pd
+import boto3
+import mlflow
+import sagemaker
+from sagemaker import get_execution_role
+from sagemaker.serve import SchemaBuilder
+from sagemaker.serve import ModelBuilder
+from sagemaker.serve.mode.function_pointers import Mode
+from mlflow import MlflowClient
+from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error
-import xgboost as xgb
+from xgboost import XGBRegressor
 
-# Load dataset
-diabetes = load_diabetes()
-X, y = diabetes.data, diabetes.target
+# Load the California Housing dataset
+data = fetch_california_housing()
+X, y = data.data, data.target
+feature_names = data.feature_names
 
-# Split data into train and test sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# Create a DataFrame for better readability
+df = pd.DataFrame(X, columns=feature_names)
+df['Target'] = y
 
-# Convert data to DMatrix format (required for XGBoost)
-dtrain = xgb.DMatrix(X_train, label=y_train)
-dtest = xgb.DMatrix(X_test, label=y_test)
+df.to_csv('california_housing.csv', index=False) 
 
-# Set XGBoost parameters
-params = {
-    'objective': 'reg:squarederror',  # Regression task
-    'max_depth': 4,
-    'eta': 0.1,
-    'eval_metric': 'rmse'
-}
+# print(df) 
 
-# Train the model
-num_round = 100
-model = xgb.train(params, dtrain, num_round)
+csv = pd.read_csv('california_housing.csv')
 
-# Make predictions
-preds = model.predict(dtest)
+print(csv) 
 
-# Evaluate the model
-rmse = mean_squared_error(y_test, preds)
-print(f"RMSE: {rmse}") 
+
+
