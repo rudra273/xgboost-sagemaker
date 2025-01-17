@@ -109,7 +109,6 @@ def main():
     model_output_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/xgb_housing/model/" 
 
  
-
     # Create pipeline
     pipeline = create_sagemaker_pipeline(
         role,
@@ -117,7 +116,6 @@ def main():
         input_data_uri,
         output_data_uri,
         model_output_uri,
-        # deploy_output_uri,
     )
 
     # Upsert pipeline
