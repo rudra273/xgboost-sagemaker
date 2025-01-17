@@ -52,9 +52,9 @@ def main():
 
     source_path = 's3://sagemaker-studio-750573229682-fffkyjouino/models/166/6013f8dc7d0b4c0a9249f8657d4bbac3/artifacts/model'
 
-    sample_input = np.array([ 1.68120000e+00,  2.50000000e+01,  4.19220056e+00,  1.02228412e+00,1.39200000e+03,  3.87743733e+00,  3.60600000e+01, -1.19010000e+02]).reshape(1, -1)
+    sample_input = np.array([8.3252,41.0,6.984126984126984,1.0238095238095235,322.0,2.555555555555556,37.88,-122.23]).reshape(1, -1)
 
-    sample_output = 0.47082585096359253
+    sample_output = 4.526
     sklearn_schema_builder = SchemaBuilder(
         sample_input=sample_input,
         sample_output=sample_output,
