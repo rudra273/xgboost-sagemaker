@@ -19,16 +19,9 @@ def get_latest_model_source(model_name):
         str: Source path of the latest model version
     """
 
-     # Set MLflow tracking URI (if needed)
-    tracking_uri = os.environ.get('MLFLOW_TRACKING_URI')
-
-    print(tracking_uri)
-
-    if tracking_uri is None:
-        print('uri not found in environment')
-        tracking_uri = 'arn:aws:sagemaker:us-east-1:750573229682:mlflow-tracking-server/mlflow-tracking-server-sagemaker-poc'
-
-    print(tracking_uri)
+    # Set MLflow tracking URI (if needed)
+    
+    tracking_uri = 'arn:aws:sagemaker:us-east-1:750573229682:mlflow-tracking-server/mlflow-tracking-server-sagemaker-poc'
 
     mlflow.set_tracking_uri(tracking_uri)
     client = MlflowClient()
@@ -50,11 +43,14 @@ def main():
     # Get the latest model source from MLflow
     source_path = get_latest_model_source("xgb-housing-model")
 
-    # source_path = 's3://sagemaker-studio-750573229682-fffkyjouino/models/0/3b8916ae80094f108a64c8491ee2313d/artifacts/model'
+    print(source_path)
 
-    xgb_housing_input = np.array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0,7.0,8.0]).reshape(1, -1)
+    xgb_housing_input = np.array([ 1.68120000e+00,  2.50000000e+01,  4.19220056e+00,  1.02228412e+00,
+        1.39200000e+03,  3.87743733e+00,  3.60600000e+01, -1.19010000e+02]).reshape(1, -1)
+    
+    xgb_housing_output = 0.59980532
 
-    xgb_housing_output = 0.123
+
     sklearn_schema_builder = SchemaBuilder(
         sample_input=xgb_housing_input,
         sample_output=xgb_housing_output,

@@ -63,7 +63,7 @@ def create_deployment_pipeline(
 
     # Create the deployment pipeline
     deployment_pipeline = Pipeline(
-        name='xgb_housing',
+        name='xgb-housing-deployment',
         steps=[deployment_step],
         sagemaker_session=pipeline_session
     )
