@@ -43,7 +43,7 @@ def create_deployment_pipeline(
 
     # Deployment step
     deployment_step = ProcessingStep(
-        name='DeployIrisModel',
+        name='DeployxgbModel',
         processor=deployment_processor,
         # inputs=[
         #     ProcessingInput(
