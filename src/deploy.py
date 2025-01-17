@@ -42,11 +42,10 @@ def main():
     
     # Get the latest model source from MLflow
     source_path = get_latest_model_source("xgb-housing-model")
+    
+    print('source_path=======',source_path)
 
-    print(source_path)
-
-    xgb_housing_input = np.array([ 1.68120000e+00,  2.50000000e+01,  4.19220056e+00,  1.02228412e+00,
-        1.39200000e+03,  3.87743733e+00,  3.60600000e+01, -1.19010000e+02]).reshape(1, -1)
+    xgb_housing_input = np.array([8.3252,41.0,6.984126984126984,1.0238095238095235,322.0,2.555555555555556,37.88,-122.23]).reshape(1, -1)
     
     xgb_housing_output = 0.59980532
 
@@ -69,8 +68,8 @@ def main():
     predictor = built_model.deploy(initial_instance_count=1, instance_type="ml.m5.large")
     
     # Optional: Test the predictor
-    prediction = predictor.predict(xgb_housing_input)
-    print("Model prediction:", prediction)
+    # prediction = predictor.predict(xgb_housing_input)
+    # print("Model prediction:", prediction) 
 
 if __name__ == '__main__':
     main()
