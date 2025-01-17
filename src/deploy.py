@@ -50,7 +50,7 @@ def main():
     # Get the latest model source from MLflow
     # source_path = get_latest_model_source("xgb-housing-model")
 
-    source_path = 's3://sagemaker-studio-750573229682-fffkyjouino/models/166/7f0ef80fc0e347b18004c360205e73c4/artifacts/model'
+    source_path = 's3://sagemaker-studio-750573229682-fffkyjouino/models/166/e9041ae94b73429dbd2a12b4d5918f88/artifacts/model'
 
     sample_input = np.array([8.3252,41.0,6.984126984126984,1.0238095238095235,322.0,2.555555555555556,37.88,-122.23]).reshape(1, -1)
 
