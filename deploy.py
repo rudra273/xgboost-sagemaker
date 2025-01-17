@@ -186,7 +186,7 @@ def main():
     role = "arn:aws:iam::750573229682:role/service-role/AmazonSageMaker-ExecutionRole-20241211T150457"
 
     # S3 URIs for model artifacts and deployment output
-    model_artifacts_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/xgb_housing/model/"
+    model_artifacts_uri = "s3://sagemaker-studio-750573229682-fffkyjouino/models/166/e9041ae94b73429dbd2a12b4d5918f88/artifacts/model"
     deploy_output_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/xgb_housing/deploy-output/"
 
     # Create deployment pipeline
