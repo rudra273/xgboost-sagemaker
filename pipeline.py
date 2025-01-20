@@ -1,14 +1,16 @@
 import sagemaker
+import boto3
 from sagemaker.workflow.pipeline import Pipeline
 from sagemaker.workflow.steps import ProcessingStep
 from sagemaker.processing import ProcessingInput, ProcessingOutput
 from sagemaker.workflow.pipeline_context import PipelineSession
 from sagemaker.processing import ScriptProcessor
+from sagemaker import get_execution_role, Session
 from src.utils.helper import load_config
-config = load_config()
+
 
 def create_sagemaker_pipeline(
-    role,
+    execution_role,
     sagemaker_session,
     input_data_uri,
     output_data_uri,
@@ -17,8 +19,26 @@ def create_sagemaker_pipeline(
     training_instance_type='ml.t3.medium'
 ):
     """
-    Create a SageMaker Pipeline using preprocessing and training scripts with ScriptProcessor.
+    Create a SageMaker pipeline with preprocessing and training steps using ScriptProcessor.
+
+    Args:
+        execution_role (str): The execution role ARN for SageMaker.
+        sagemaker_session (sagemaker.session.Session): The SageMaker session to use.
+        input_data_uri (str): The S3 URI where the input data is stored.
+        output_data_uri (str): The S3 URI where the processed data will be saved.
+        model_output_uri (str): The S3 URI where the trained model artifacts will be stored.
+        processing_instance_type (str, optional): The instance type for the preprocessing step. Defaults to 'ml.t3.medium'.
+        training_instance_type (str, optional): The instance type for the training step. Defaults to 'ml.t3.medium'.
+
+    Returns:
+        Pipeline: A SageMaker pipeline object with preprocessing and training steps.
+
+    Notes:
+        - The pipeline consists of a preprocessing step that uses a custom Docker image with ScriptProcessor, followed by a training step.
+        - The input data is processed in the preprocessing step and passed to the training step.
+        - The pipeline is created with the provided execution role and session.
     """
+
 
     # Create a pipeline session
     pipeline_session = PipelineSession()
@@ -30,7 +50,7 @@ def create_sagemaker_pipeline(
     script_processor = ScriptProcessor(
         image_uri=image_uri,
         command=["python3"],
-        role=role,
+        role=execution_role,
         instance_type=processing_instance_type,
         instance_count=1,
         sagemaker_session=pipeline_session
@@ -60,7 +80,7 @@ def create_sagemaker_pipeline(
     training_processor = ScriptProcessor(
         image_uri=image_uri,
         command=["python3"],
-        role=role,
+        role=execution_role,
         instance_type=training_instance_type,
         instance_count=1,
         sagemaker_session=pipeline_session
@@ -99,24 +119,28 @@ def create_sagemaker_pipeline(
 
 def main():
 
+    region_name = "us-east-1" 
+    boto3.setup_default_session(region_name=region_name)
+    sagemaker_session = Session()
+
+    # execution_role = get_execution_role(sagemaker_session=sagemaker_session)
+    execution_role = 'arn:aws:iam::750573229682:role/service-role/AmazonSageMaker-ExecutionRole-20241211T150457'
+    
+    config = load_config()
     s3 = config.get("s3", {}) 
 
-    # Initialize SageMaker session and get role
-    sagemaker_session = sagemaker.Session()
-
-    role = 'arn:aws:iam::750573229682:role/service-role/AmazonSageMaker-ExecutionRole-20241211T150457'
-
     # S3 URIs for input and output data
-    
+
     # input_data_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/xgb_housing/inout_csv/"
     input_data_uri = s3.get("input_bucket_name") 
-    output_data_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/xgb_housing/processed_csv/" 
+    # output_data_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/xgb_housing/processed_csv/" 
+    output_data_uri = s3.get("output_bucket_name")
     model_output_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/xgb_housing/model/" 
 
  
     # Create pipeline
     pipeline = create_sagemaker_pipeline(
-        role,
+        execution_role,
         sagemaker_session,
         input_data_uri,
         output_data_uri,
@@ -124,7 +148,7 @@ def main():
     )
 
     # Upsert pipeline
-    pipeline.upsert(role_arn=role)
+    pipeline.upsert(role_arn=execution_role)
 
     # Execute the pipeline
     execution = pipeline.start()

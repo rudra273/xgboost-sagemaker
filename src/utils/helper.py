@@ -1,4 +1,3 @@
-# helper function for module
 import os
 import yaml
 import pandas as pd
@@ -9,13 +8,25 @@ def test_function():
 
 def load_config():
     # Get the path to the config file in the container
-    config_path = os.path.join(os.getcwd(), "utils/config.yml")  
+    config_path = os.path.join(os.getcwd(), "src/utils/config.yml")  
     with open(config_path, 'r') as file:
         conf = yaml.safe_load(file)
     return conf
 
 
 def get_data(file_name):
+    """
+    Load data from a specified file in the input directory.
+
+    Args:
+        file_name (str): The name of the file to load.
+
+    Returns:
+        pd.DataFrame: The loaded dataset as a DataFrame.
+
+    Raises:
+        ValueError: If no input files are found in the input directory.
+    """
 
     input_path = "/opt/ml/processing/input"
 
@@ -36,6 +47,19 @@ def get_data(file_name):
  
 
 def upload_data(data, file_name):
+    """
+    Save the provided DataFrame to a specified file in the output directory.
+
+    Args:
+        data (pd.DataFrame): The dataset to save.
+        file_name (str): The name of the file to save the data to.
+
+    Returns:
+        str: The full path of the saved file.
+
+    Notes:
+        Ensures the output directory exists before saving the file.
+    """
 
     output_path = "/opt/ml/processing/output"
     # Ensure output directory exists
@@ -52,7 +76,19 @@ def upload_data(data, file_name):
 
 
 def get_processed_data():
-    
+    """
+    Load and concatenate all processed training files from the specified directory.
+
+    Returns:
+        pd.DataFrame: A concatenated DataFrame containing all processed training data.
+
+    Raises:
+        ValueError: If no input files are found in the training directory.
+
+    Notes:
+        Assumes the input files are in CSV format and located in "/opt/ml/processing/input/train".
+    """
+
     processed_file_path = "/opt/ml/processing/input/train"
     input_files = [
         os.path.join(processed_file_path, file) 
