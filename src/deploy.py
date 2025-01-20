@@ -60,12 +60,19 @@ def main():
         sample_output=sample_output,
     )
 
-    # Create model builder with the schema builder.
+    # # Create model builder with the schema builder.
+    # model_builder = ModelBuilder(
+    #     mode=Mode.SAGEMAKER_ENDPOINT,
+    #     schema_builder=sklearn_schema_builder,
+    #     role_arn=role,
+    #     model_metadata={"MLFLOW_MODEL_PATH": source_path},
+    # )
     model_builder = ModelBuilder(
         mode=Mode.SAGEMAKER_ENDPOINT,
         schema_builder=sklearn_schema_builder,
         role_arn=role,
         model_metadata={"MLFLOW_MODEL_PATH": source_path},
+        image_uri=source_path  # Specify your image URI here
     )
 
     built_model = model_builder.build()
