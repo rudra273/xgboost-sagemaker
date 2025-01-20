@@ -9,7 +9,7 @@ def test_function():
 
 def load_config():
     # Get the path to the config file in the container
-    config_path = os.path.join(os.getcwd(), "src/utils/config.yml")  
+    config_path = os.path.join(os.getcwd(), "utils/config.yml")  
     with open(config_path, 'r') as file:
         conf = yaml.safe_load(file)
     return conf
