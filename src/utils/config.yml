@@ -1,0 +1,5 @@
+s3:
+  input_bucket_name: "s3://mlflow-sagemaker-us-east-1-750573229682/xgb_housing/inout_csv/"
+  input_filename: "california_housing.csv"
+
+

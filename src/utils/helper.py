@@ -1,10 +1,18 @@
 # helper function for module
 import os
+import yaml
 import pandas as pd
 
 def test_function():
     print("test function called from utils") 
     return None
+
+def load_config():
+    # Get the path to the config file in the container
+    config_path = os.path.join(os.getcwd(), "src/utils/config.yml")  
+    with open(config_path, 'r') as file:
+        conf = yaml.safe_load(file)
+    return conf
 
 
 def get_data(file_name):

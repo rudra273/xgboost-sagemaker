@@ -4,7 +4,8 @@ from sagemaker.workflow.steps import ProcessingStep
 from sagemaker.processing import ProcessingInput, ProcessingOutput
 from sagemaker.workflow.pipeline_context import PipelineSession
 from sagemaker.processing import ScriptProcessor
-
+from src.utils.helper import load_config
+config = load_config()
 
 def create_sagemaker_pipeline(
     role,
@@ -89,7 +90,7 @@ def create_sagemaker_pipeline(
     # Create pipeline
     pipeline = Pipeline(
         name='xgboost-mlflow-pipeline',
-        steps=[processing_step,training_step],
+        steps=[processing_step],
         sagemaker_session=pipeline_session
     )
 
@@ -97,6 +98,9 @@ def create_sagemaker_pipeline(
 
 
 def main():
+
+    s3 = config.get("s3", {}) 
+
     # Initialize SageMaker session and get role
     sagemaker_session = sagemaker.Session()
 
@@ -104,7 +108,8 @@ def main():
 
     # S3 URIs for input and output data
     
-    input_data_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/xgb_housing/inout_csv/"
+    # input_data_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/xgb_housing/inout_csv/"
+    input_data_uri = s3.get("input_bucket_name") 
     output_data_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/xgb_housing/processed_csv/" 
     model_output_uri = "s3://mlflow-sagemaker-us-east-1-750573229682/xgb_housing/model/" 
 
