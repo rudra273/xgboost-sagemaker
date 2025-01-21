@@ -57,5 +57,5 @@ def inference():
         result = {"error": f"Internal server error"}
         return Response(response=result, status=500, mimetype="application/json")
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080)
+# if __name__ == "__main__":
+#     app.run(host="0.0.0.0", port=8080)
