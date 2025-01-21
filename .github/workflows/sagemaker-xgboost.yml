@@ -39,5 +39,4 @@ jobs:
           # docker push 750573229682.dkr.ecr.us-east-1.amazonaws.com/xgboost-sagemaker:latest     
           # docker images    
           # python pipeline.py
-          
           python deploy.py
