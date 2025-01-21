@@ -2,10 +2,9 @@ FROM python:3.9.21-bullseye
 
 # Copy all project files, including the src directory
 COPY src/ src/
-Copy requirements.txt .
 
 # Install dependencies
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir -r src/requirements.txt
 
 WORKDIR /src
 

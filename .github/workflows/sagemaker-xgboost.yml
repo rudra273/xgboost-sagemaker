@@ -36,6 +36,7 @@ jobs:
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 750573229682.dkr.ecr.us-east-1.amazonaws.com         
           docker build -t xgboost-sagemaker .
           docker tag xgboost-sagemaker:latest 750573229682.dkr.ecr.us-east-1.amazonaws.com/xgboost-sagemaker:latest          
-          docker push 750573229682.dkr.ecr.us-east-1.amazonaws.com/xgboost-sagemaker:latest         
+          docker push 750573229682.dkr.ecr.us-east-1.amazonaws.com/xgboost-sagemaker:latest     
+          docker images    
           python pipeline.py
           # python deploy.py
