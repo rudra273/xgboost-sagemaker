@@ -11,7 +11,7 @@ RUN apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev
 COPY src/requirements.txt /src/
 
 # Install dependencies in the build stage
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the entire source code (after installing dependencies)
 COPY src/ /src/
