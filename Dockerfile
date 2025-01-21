@@ -7,10 +7,10 @@ Copy requirements.txt .
 # Install dependencies
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-# WORKDIR /src
+WORKDIR /src
 
-# # Set the PYTHONPATH to include the src directory
-# ENV PYTHONPATH=/src
+# Set the PYTHONPATH to include the src directory
+ENV PYTHONPATH=/src
 
 # Ensure Python output is not buffered
 ENV PYTHONUNBUFFERED=TRUE
