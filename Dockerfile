@@ -1,12 +1,4 @@
-FROM ubuntu:20.04
-
-RUN apt-get -y update && apt-get install -y --no-install-recommends \
-    wget \
-    python3-pip \
-    python3-setuptools \
-    nginx \
-    ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
+FROM 750573229682.dkr.ecr.us-east-1.amazonaws.com/xgboost-sagemaker:latest
 
 # Install required packages
 COPY requirements.txt /opt/program/requirements.txt
