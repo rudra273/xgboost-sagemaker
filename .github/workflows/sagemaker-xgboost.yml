@@ -1,41 +1,41 @@
-# name: deploy
+name: deploy
 
-# on: 
-#   push:
-#     branches: [test]
-#   pull_request:
-#     branches: [test]
+on: 
+  push:
+    branches: [test]
+  pull_request:
+    branches: [test]
     
-# jobs:
-#    sagemaker-xgboost:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v3
+jobs:
+   sagemaker-xgboost:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-#       - name: Set up Python 3.9.21
-#         uses: actions/setup-python@v3
-#         with:
-#           python-version: "3.9.21"
+      - name: Set up Python 3.9.21
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.9.21"
 
-#       - name: Configure AWS Credentials
-#         uses: aws-actions/configure-aws-credentials@v3
-#         with:
-#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#           aws-region: us-east-1
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
       
-#       - name: Install requirements
-#         run: pip3 install -r requirements.txt
+      - name: Install requirements
+        run: pip3 install -r requirements.txt
       
-#       - name: Fire SageMaker
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#           MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
-#         run: |
-#           # aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 750573229682.dkr.ecr.us-east-1.amazonaws.com         
-#           # docker build -t xgboost-sagemaker .
-#           # docker tag xgboost-sagemaker:latest 750573229682.dkr.ecr.us-east-1.amazonaws.com/xgboost-sagemaker:latest          
-#           # docker push 750573229682.dkr.ecr.us-east-1.amazonaws.com/xgboost-sagemaker:latest         
-#           # python pipeline.py
-#           # python deploy.py
+      - name: Fire SageMaker
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+        run: |
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 750573229682.dkr.ecr.us-east-1.amazonaws.com         
+          docker build -t xgboost-sagemaker .
+          docker tag xgboost-sagemaker:latest 750573229682.dkr.ecr.us-east-1.amazonaws.com/xgboost-sagemaker:latest          
+          docker push 750573229682.dkr.ecr.us-east-1.amazonaws.com/xgboost-sagemaker:latest         
+          python pipeline.py
+          # python deploy.py
