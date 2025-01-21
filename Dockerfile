@@ -1,25 +1,39 @@
-# Use your custom XGBoost SageMaker base image
-FROM 750573229682.dkr.ecr.us-east-1.amazonaws.com/xgboost-sagemaker:latest
+# Build an image that can do training and inference in SageMaker
+# This is a Python 3 image that uses the nginx, gunicorn, flask stack
+# for serving inferences in a stable way.
 
-# Copy your resources (e.g., serve.py, predict.py, nginx.conf, etc.)
-COPY resources/*.* /
+FROM ubuntu:18.04
 
-# Install necessary Python libraries (flask, gunicorn, pandas, etc.)
-RUN pip install flask
-RUN pip install gunicorn
-RUN pip uninstall gevent
-RUN pip install gevent
-RUN pip install pandas
+MAINTAINER Amazon AI <sage-learner@amazon.com>
 
-# Install nginx (if needed for reverse proxy setup)
+
 RUN apt-get -y update && apt-get install -y --no-install-recommends \
          wget \
+         python3-pip \
+         python3-setuptools \
          nginx \
          ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# Set environment variable for working directory
-ENV WORKDIR /
+RUN ln -s /usr/bin/python3 /usr/bin/python
+RUN ln -s /usr/bin/pip3 /usr/bin/pip
 
-# Set the entry point to run your model service
-ENTRYPOINT ["python", "/serve.py"]
+# Here we get all python packages.
+# There's substantial overlap between scipy and numpy that we eliminate by
+# linking them together. Likewise, pip leaves the install caches populated which uses
+# a significant amount of space. These optimizations save a fair amount of space in the
+# image, which reduces start up time.
+RUN pip --no-cache-dir install numpy==1.16.2 scipy==1.2.1 scikit-learn==0.20.2 xgboost==1.7.2 pandas flask gunicorn
+
+# Set some environment variables. PYTHONUNBUFFERED keeps Python from buffering our standard
+# output stream, which means that logs can be delivered to the user quickly. PYTHONDONTWRITEBYTECODE
+# keeps Python from writing the .pyc files which are unnecessary in this case. We also update
+# PATH so that the train and serve programs are found when the container is invoked.
+
+ENV PYTHONUNBUFFERED=TRUE
+ENV PYTHONDONTWRITEBYTECODE=TRUE
+ENV PATH="/opt/program:${PATH}"
+
+# Set up the program in the image
+COPY decision_trees /opt/program
+WORKDIR /opt/program
