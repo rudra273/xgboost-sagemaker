@@ -24,7 +24,7 @@
 #__________
 
 # Stage 1: Build Stage
-FROM python:3.9-slim-bullseye AS build
+FROM python:3.9.21-slim-bullseye AS build
 
 # Set the working directory
 WORKDIR /src
@@ -39,7 +39,7 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 COPY src/ /src
 
 # Stage 2: Final Stage
-FROM python:3.9-slim-bullseye
+FROM python:3.9.21-slim-bullseye
 
 # Set the working directory
 WORKDIR /src
