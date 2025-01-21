@@ -77,7 +77,7 @@ def main():
 
     built_model = model_builder.build()
 
-    predictor = built_model.deploy(initial_instance_count=1, instance_type="ml.m5.large")
+    predictor = built_model.deploy(initial_instance_count=1, instance_type="ml.t3.large")
     
     # Optional: Test the predictor
     prediction = predictor.predict(sample_input)
