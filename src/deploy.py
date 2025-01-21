@@ -72,7 +72,7 @@ def main():
         schema_builder=sklearn_schema_builder,
         role_arn=role,
         model_metadata={"MLFLOW_MODEL_PATH": source_path},
-        image_uri='750573229682.dkr.ecr.us-east-1.amazonaws.com/xgboost-sagemaker:latest'  # Specify your image URI here
+        image_uri='750573229682.dkr.ecr.us-east-1.amazonaws.com/xgboost-sagemaker:deploy'  # Specify your image URI here
     )
 
     built_model = model_builder.build()
