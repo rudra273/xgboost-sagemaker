@@ -1,4 +1,3 @@
-# predictor.py
 import os
 import json
 import flask
