@@ -17,7 +17,7 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 COPY src/ /src/
 
 # Stage 2: Final Stage
-FROM FROM python:3.9.21-bullseye
+FROM python:3.9.21-bullseye
 
 # Set the working directory
 WORKDIR /src
