@@ -90,8 +90,10 @@ COPY --from=build /usr/local/bin /usr/local/bin
 
 # Copy the source code from the build stage
 COPY --from=build /src/ /src
-RUN apk del build-base && rm -rf /var/cache/apk/* /src/tests /src/docs /src/*.log /src/__pycache__
 
+
+# Clean up unnecessary files to reduce image size
+RUN rm -rf /var/cache/apt/* /src/tests /src/docs /src/*.log /src/__pycache__
 
 # Set the PYTHONPATH to include the src directory
 ENV PYTHONPATH=/src
