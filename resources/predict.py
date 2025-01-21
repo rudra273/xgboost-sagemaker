@@ -11,10 +11,16 @@ class XGBoostService:
     @classmethod
     def create_predictor(cls):
         try:
+            # Try to get the primary model directory from the environment variable
             model_dir = os.environ["SM_MODEL_DIR"]
         except KeyError:
+            # If the environment variable is not set, use the fallback directory
             model_dir = "/opt/ml/model"
         
+        # Additional fallback: If the primary path does not exist, use another fallback
+        if not os.path.exists(model_dir):
+            model_dir = "/opt/ml/processing/input/model"
+        print(model_dir)
         model_path = os.path.join(model_dir, 'model.xgb')
         cls.model = xgb.Booster()
         cls.model.load_model(model_path)
