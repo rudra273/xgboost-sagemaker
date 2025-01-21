@@ -5,7 +5,7 @@ import pandas as pd
 import mlflow
 from sklearn.model_selection import train_test_split
 from xgboost import XGBRegressor
-from src.utils.helper import get_processed_data, test_function
+from utils.helper import get_processed_data, test_function
 
 # def main():
 #     # Parse arguments

@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from src.utils.helper import test_function , get_data, upload_data
+from utils.helper import test_function , get_data, upload_data
 
 test_function() 
 
