@@ -37,5 +37,6 @@ jobs:
           docker build -t xgboost-sagemaker .
           docker tag xgboost-sagemaker:latest 750573229682.dkr.ecr.us-east-1.amazonaws.com/xgboost-sagemaker:deploy         
           docker push 750573229682.dkr.ecr.us-east-1.amazonaws.com/xgboost-sagemaker:deploy
+          
           docker images    
           
